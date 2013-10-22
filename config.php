@@ -15,6 +15,7 @@
 		exit("no map specified('Keren','Narvik','Sevastopol','Smolensk','Westerplatte')");
 	}
 ?>
+
 <style>
 .u-1{
 width:20px;

@@ -12,6 +12,7 @@ foreach($map as &$line){
 				);
 	}
 }
-
+$map[6] = array(0,0,0,0,0,0);
+//exit(print_r($map));
 $cood = array("H" => 6, "W" => 6);
 ?>
