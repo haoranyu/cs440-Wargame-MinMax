@@ -1,5 +1,5 @@
 <?php
-	header('Content-Type: text/plain');
+	header('Content-Type: text/html');
 	
 	$map_array = array(
 				'Keren',
@@ -15,3 +15,23 @@
 		exit("no map specified('Keren','Narvik','Sevastopol','Smolensk','Westerplatte')");
 	}
 ?>
+<style>
+.u-1{
+width:20px;
+color:#bbb;
+display:block;
+float:left;
+}
+.u0{
+width:20px;
+color:blue;
+display:block;
+float:left;
+}
+.u1{
+width:20px;
+color:red;
+display:block;
+float:left;
+}
+</style>

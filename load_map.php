@@ -6,7 +6,10 @@ $map = explode("\n",$map);
 foreach($map as &$line){
 	$line = explode("\t", $line);
 	foreach($line as &$col){
-		$col = array("value" => $col, "color" => 0);
+		$col = array(
+				"value" => $col, 
+				"color" => -1 //-1 is empty, 1 is me, 0 is opponent
+				);
 	}
 }
 
