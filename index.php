@@ -56,6 +56,14 @@ function buildTree_MinMax($map_x){
 	$tree["value"] = $tree["value"][0];
 	return $tree;
 }
+function reinitMap($map_x){
+	for($r = 0; $r < 6; $r ++){
+		for($c = 0; $c < 6; $c ++){
+			$map_x[$r][$c]['color'] = -1;
+		}
+	}
+	return $map_x;
+}
 function getDecision_MinMax($map_x){
 	$result = buildTree_MinMax($map_x);
 	$result = explode(",", $result['next']);
@@ -91,27 +99,26 @@ function getMinMax($subtree,$max,$root = 0){
 	}
 }
 function buildTree_MinMax_helper($map_x, $tree, $ancestor ,$level = 0, $user = 1){
+	//print_r($tree);
 	if(evalueDepth($map_x) == $level) return -1;
 	else{
-	
 		$subtree = array();
 		for($r = 0; $r < 6; $r ++){
 			for($c = 0; $c < 6; $c ++){
 				if($map_x[$r][$c]["color"] == -1){
 					if(!in_array($r.",".$c, $ancestor)){
-						$node = array("coor" => $r.",".$c, "value"=> -1, "user" => $user,"subtree" => buildTree_MinMax_helper($map_x, $tree, array_merge($ancestor, array($r.",".$c)), $level+1, not($user)));
+						$node = array("coor" => $r.",".$c, "value"=> -1, "user" => $user,"subtree" => buildTree_MinMax_helper($map_x, array(), array_merge($ancestor, array($r.",".$c)), $level+1, not($user)));
+						
 						if($node["subtree"] == -1){ // if it the leaf
-							$map_x_in = $map_x;
-							
 							$user_in = 0;
 							$ancestor_in = array_merge($ancestor, array($r.",".$c));
-							print_r($ancestor_in);
+							//print_r($ancestor_in);
 							//0,0之外的所有的第三层都没用5,X作为祖先，很奇怪
+							$map_x_in = reinitMap($map_x);
 							foreach($ancestor_in as $a){
 								$coor = explode(",",$a);
 								$map_x_in = takeStep($map_x_in, $coor[0], $coor[1], not($user_in));
 							}
-						
 							$node["value"] = getScore($map_x_in);
 							$node["value"] = $node["value"][$node["user"]];
 						}
@@ -121,10 +128,8 @@ function buildTree_MinMax_helper($map_x, $tree, $ancestor ,$level = 0, $user = 1
 						array_push($subtree, $node);
 					}
 				}
-				
 			}
 		}
-		
 	}
 	return $subtree;
 }
@@ -137,7 +142,7 @@ function flipView($map_x){
 	}
 	return $map_x;
 }
-buildTree_MinMax($map);
+print_r(buildTree_MinMax($map));
 //play it !
 /*
 $coor = getDecision_MinMax($map);
