@@ -27,7 +27,7 @@ function buildTree_MinMax($map_x){
 	return $tree;
 }
 function buildTree_MinMax_helper($map_x, $ancestor ,$level = 0, $user){
-	if($level == 3){
+	if($level == 2){
 		$map_x = excuteStep($map_x, $ancestor);
 		$socre = getScore($map_x);
 		return $socre[1];
@@ -99,50 +99,21 @@ function flipView($map_x){
 	return $map_x;
 }
 
-//print_r(buildTree_MinMax($map));
-
-
 //play it !
+
+$time = time();
+for($i = 0; $i < 3; $i++){
 $coor = getDecision_MinMax($map);
 $map = excuteStep($map, array($coor[0].",".$coor[1]));
-drawMap($map);
-/*
-for($i = 0; $i < 1; $i++){
-$coor = getDecision_MinMax($map);
-$map = excuteStep($map, array($coor[0].",".$coor[1]));
-drawMap($map);
+echo "Take: ".$coor[0].",".$coor[1].", use: ".(time() - $time)."s<br/>";
+$time = time();
 $map = flipView($map);
 $coor = getDecision_MinMax($map);
 $map = excuteStep($map, array($coor[0].",".$coor[1]));
+echo "Take: ".$coor[0].",".$coor[1].", use: ".(time() - $time)."s<br/>";
+$time = time();
 $map = flipView($map);
 }
 drawMap($map);
-
-//$coor = getDecision_MinMax($map);
-//print_r($coor);
-/*
-$map = takeStep($map, $coor[0], $coor[1], 1);
-drawMap($map);
-
-/*
-$coor = getDecision_MinMax($map);
-$map = takeStep($map, $coor[0], $coor[1], 1);
-
-$map = flipView($map);
-
-$coor = getDecision_MinMax($map);
-$map = takeStep($map, $coor[0], $coor[1], 1);
-drawMap($map);
-$map = flipView($map);
-
-$coor = getDecision_MinMax($map);
-$map = takeStep($map, $coor[0], $coor[1], 1);
-$map = flipView($map);
-
-$coor = getDecision_MinMax($map);
-
-$map = takeStep($map, $coor[0], $coor[1], 1);
-$map = flipView($map);
-*/
 
 ?>
