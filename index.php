@@ -24,6 +24,10 @@ function buildTree_MinMax($map_x){
 	$tree["value"] = getMinMax($tree["subtree"],1,1);
 	$tree["next"] = $tree["value"][1];
 	$tree["value"] = $tree["value"][0];
+	$tree["count"] = 0;
+	foreach($tree["subtree"] as $node){
+		$tree["count"] += $node['count'];
+	}
 	return $tree;
 }
 function buildTree_MinMax_helper($map_x, $ancestor ,$level = 0, $user){
@@ -42,10 +46,15 @@ function buildTree_MinMax_helper($map_x, $ancestor ,$level = 0, $user){
 						$temp_node = array("coor"=>$map_x[$r][$c]["coor"] , "value" => -1, "subtree" => buildTree_MinMax_helper($map_x, $ancestor_next ,$level+1, not($user)));
 						if(is_array($temp_node["subtree"])){
 							$temp_node["value"] = getMinMax($temp_node["subtree"], $user);
+							$temp_node["count"] = 0;
+							foreach($temp_node["subtree"] as $node){
+								$temp_node["count"] += $node['count'];
+							}
 						}
 						else{
 							$temp_node["value"] = $temp_node["subtree"];
 							$temp_node["subtree"] = NULL;
+							$temp_node["count"] = 1;
 						}
 						array_push($subtree, $temp_node);
 					}
@@ -57,8 +66,7 @@ function buildTree_MinMax_helper($map_x, $ancestor ,$level = 0, $user){
 }
 function getDecision_MinMax($map_x){
 	$result = buildTree_MinMax($map_x);
-	$result = explode(",", $result['next']);
-	return $result;
+	return array($result['next'],$result['count']);
 }
 function getMinMax($subtree,$max,$root = 0){
 	$coor = "";
@@ -101,16 +109,22 @@ function flipView($map_x){
 
 //play it !
 
+echo "the Map is ".$_GET['map']."<br/>";
+echo "Minimax vs. minimax"."<br/>";
 $time = time();
-for($i = 0; $i < 3; $i++){
-$coor = getDecision_MinMax($map);
-$map = excuteStep($map, array($coor[0].",".$coor[1]));
-echo "Take: ".$coor[0].",".$coor[1].", use: ".(time() - $time)."s<br/>";
+for($i = 0; $i < 18; $i++){
+$decision = getDecision_MinMax($map);
+$coor = $decision[0];
+$node_count = $decision[1];
+$map = excuteStep($map, array($coor));
+echo "Blue: paradrop ".decodeCoor($coor).", use: ".(time() - $time)."s, Node expanded: ".$node_count."<br/>";
 $time = time();
 $map = flipView($map);
-$coor = getDecision_MinMax($map);
-$map = excuteStep($map, array($coor[0].",".$coor[1]));
-echo "Take: ".$coor[0].",".$coor[1].", use: ".(time() - $time)."s<br/>";
+$decision = getDecision_MinMax($map);
+$coor = $decision[0];
+$node_count = $decision[1];
+$map = excuteStep($map, array($coor));
+echo "Green: paradrop ".decodeCoor($coor).", use: ".(time() - $time)."s, Node expanded: ".$node_count."<br/>";
 $time = time();
 $map = flipView($map);
 }

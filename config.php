@@ -25,13 +25,13 @@ float:left;
 }
 .u0{
 width:20px;
-color:blue;
+color:green;
 display:block;
 float:left;
 }
 .u1{
 width:20px;
-color:red;
+color:blue;
 display:block;
 float:left;
 }

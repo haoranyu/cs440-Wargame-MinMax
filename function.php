@@ -23,5 +23,11 @@ function objectToArray($object){
 	}
     return $result; 
 }
+function decodeCoor($coor){
+$C = array("A","B","C","D","E","F");
+$R = array("1","2","3","4","5","6");
+$coor = explode(",",$coor);
+return $R[$coor[0]].$C[$coor[1]];
+}
 
 ?>
