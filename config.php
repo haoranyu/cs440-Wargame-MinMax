@@ -1,6 +1,6 @@
 <?php
 	header('Content-Type: text/html');
-	
+	set_time_limit(720);
 	$map_array = array(
 				'Keren',
 				'Narvik',

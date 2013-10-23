@@ -1,4 +1,5 @@
 <?php
+
 function drawMap($map){
 	echo "<div style=\"margin-bottom:10px\">";
 	foreach($map as $r){
@@ -13,4 +14,14 @@ function not($u){
 	if($u == 1) return 0;
 	return 1;
 }
+function objectToArray($object){ 
+    $result = array(); 
+    $object = is_object($object) ? get_object_vars($object) : $object; 
+    foreach ($object as $key => $val) { 
+        $val = (is_object($val) || is_array($val)) ? objectToArray($val) : $val; 
+        $result[$key] = $val; 
+	}
+    return $result; 
+}
+
 ?>
