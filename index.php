@@ -31,7 +31,7 @@ function buildTree_MinMax($map_x){
 	return $tree;
 }
 function buildTree_MinMax_helper($map_x, $ancestor ,$level = 0, $user){
-	if($level == 2){
+	if($level == 3){
 		$map_x = excuteStep($map_x, $ancestor);
 		$socre = getScore($map_x);
 		return $socre[1];
@@ -112,22 +112,33 @@ function flipView($map_x){
 echo "the Map is ".$_GET['map']."<br/>";
 echo "Minimax vs. minimax"."<br/>";
 $time = time();
+$timesum = 0;
+$nodesum = array(0,0);
 for($i = 0; $i < 18; $i++){
 $decision = getDecision_MinMax($map);
 $coor = $decision[0];
 $node_count = $decision[1];
 $map = excuteStep($map, array($coor));
-echo "Blue: paradrop ".decodeCoor($coor).", use: ".(time() - $time)."s, Node expanded: ".$node_count."<br/>";
+$time_dur = (time() - $time);
+$timesum+=$time_dur;
+$nodesum[0] +=$node_count;
+echo "Blue: paradrop ".decodeCoor($coor).", use: ".$time_dur."s, Node expanded: ".$node_count."<br/>";
 $time = time();
 $map = flipView($map);
 $decision = getDecision_MinMax($map);
 $coor = $decision[0];
 $node_count = $decision[1];
 $map = excuteStep($map, array($coor));
-echo "Green: paradrop ".decodeCoor($coor).", use: ".(time() - $time)."s, Node expanded: ".$node_count."<br/>";
+$time_dur = (time() - $time);
+$timesum+=$time_dur;
+$nodesum[1] +=$node_count;
+echo "Green: paradrop ".decodeCoor($coor).", use: ".$time_dur."s, Node expanded: ".$node_count."<br/>";
 $time = time();
 $map = flipView($map);
 }
 drawMap($map);
-
+echo "Total number of game tree nodes expanded by Blue:".$nodesum[0]."<br/>";
+echo "Total number of game tree nodes expanded by Green:".$nodesum[1]."<br/>";
+echo "Average number of nodes expanded / Move:". ($nodesum[0]+$nodesum[1])/36 ."<br/>";
+echo "Average amount of time / Move:". $timesum/36 ."s<br/>";
 ?>

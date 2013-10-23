@@ -1,6 +1,6 @@
 <?php
 	header('Content-Type: text/html');
-	set_time_limit(720);
+	set_time_limit(20000);
 	$map_array = array(
 				'Keren',
 				'Narvik',
@@ -18,19 +18,19 @@
 
 <style>
 .u-1{
-width:20px;
+width:30px;
 color:#bbb;
 display:block;
 float:left;
 }
 .u0{
-width:20px;
+width:30px;
 color:green;
 display:block;
 float:left;
 }
 .u1{
-width:20px;
+width:30px;
 color:blue;
 display:block;
 float:left;
