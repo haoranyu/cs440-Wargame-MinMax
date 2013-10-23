@@ -114,7 +114,7 @@ echo "Minimax vs. minimax"."<br/>";
 $time = time();
 $timesum = 0;
 $nodesum = array(0,0);
-for($i = 0; $i < 18; $i++){
+for($i = 0; $i < 1; $i++){
 $decision = getDecision_MinMax($map);
 $coor = $decision[0];
 $node_count = $decision[1];
