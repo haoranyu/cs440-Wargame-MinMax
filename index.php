@@ -4,8 +4,12 @@ include("load_map.php");
 include("function.php");
 function excuteStep($map_x, $steps){
 	$map_x = urlencode(json_encode($map_x));
-	$steps = urlencode(json_encode($steps));
-	$back = objectToArray(json_decode(file_get_contents('http://127.0.0.1/host/cs440/cs440-wargame/takestep.php?map='.$map_x.'&step='.$steps)));
+	$steps = urlencode(json_encode($steps)); 
+	$back = curl_file_get_contents('http://127.0.0.1/host/cs440/cs440-wargame/takestep.php?map='.$map_x.'&step='.$steps);
+	while($back == false){
+		$back = curl_file_get_contents('http://127.0.0.1/host/cs440/cs440-wargame/takestep.php?map='.$map_x.'&step='.$steps);
+	}
+	$back = objectToArray(json_decode($back));
 	return $back;
 }
 function getScore($map_x){
@@ -30,6 +34,7 @@ function buildTree_MinMax($map_x){
 	}
 	return $tree;
 }
+
 function buildTree_MinMax_helper($map_x, $ancestor ,$level = 0, $user){
 	if($level == 3){
 		$map_x = excuteStep($map_x, $ancestor);
@@ -44,6 +49,13 @@ function buildTree_MinMax_helper($map_x, $ancestor ,$level = 0, $user){
 					if(!in_array($map_x[$r][$c]["coor"],$ancestor)){
 						$ancestor_next = array_merge($ancestor, array($map_x[$r][$c]["coor"]));
 						$temp_node = array("coor"=>$map_x[$r][$c]["coor"] , "value" => -1, "subtree" => buildTree_MinMax_helper($map_x, $ancestor_next ,$level+1, not($user)));
+						
+						$edge_counter = 1;
+						while(is_array($temp_node["subtree"]) && empty($temp_node["subtree"])){
+							$temp_node = array("coor"=>$map_x[$r][$c]["coor"] , "value" => -1, "subtree" => buildTree_MinMax_helper($map_x, $ancestor_next ,$level+1+$edge_counter, not($user)));
+							$edge_counter ++;
+						}
+						
 						if(is_array($temp_node["subtree"])){
 							$temp_node["value"] = getMinMax($temp_node["subtree"], $user);
 							$temp_node["count"] = 0;
@@ -114,7 +126,7 @@ echo "Minimax vs. minimax"."<br/>";
 $time = time();
 $timesum = 0;
 $nodesum = array(0,0);
-for($i = 0; $i < 1; $i++){
+for($i = 0; $i < 18; $i++){
 $decision = getDecision_MinMax($map);
 $coor = $decision[0];
 $node_count = $decision[1];
