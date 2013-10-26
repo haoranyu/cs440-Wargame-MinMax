@@ -11,13 +11,14 @@ curl_close($ch);
    return $output;
  }
 function drawMap($map){
-	echo "<div style=\"margin-bottom:10px\">";
+	echo "<div class=\"x-map\">";
 	foreach($map as $r){
 		foreach($r as $c){
-			echo '<span class="u'.$c['color'].'">'.$c['value']."|</span> ";
+			echo '<span class="x-block o'.$c['color'].'">'.$c['value']."|</span> ";
 		}
 		echo "<br/>";
 	}
+	echo '<div style="float:none"></div>';
 	echo "</div>";
 }
 function not($u){
@@ -33,11 +34,31 @@ function objectToArray($object){
 	}
     return $result; 
 }
+function flipView($map_x){
+	foreach($map_x as &$r){
+		foreach($r as &$c){
+			if($c['color'] == 1) $c['color'] = 0;
+			elseif($c['color'] == 0) $c['color'] = 1;
+		}
+	}
+	return $map_x;
+}
 function decodeCoor($coor){
 $C = array("A","B","C","D","E","F");
 $R = array("1","2","3","4","5","6");
 $coor = explode(",",$coor);
 return $R[$coor[0]].$C[$coor[1]];
+}
+function excuteStep($map_x, $steps){
+	$map_x = urlencode(json_encode($map_x));
+	$steps = urlencode(json_encode($steps)); 
+	$back = curl_file_get_contents('http://127.0.0.1/host/cs440/cs440-wargame/takestep.php?map='.$map_x.'&step='.$steps);
+	//exit('http://127.0.0.1/host/cs440/cs440-wargame/takestep.php?map='.$map_x.'&step='.$steps);
+	while($back == false){
+		$back = curl_file_get_contents('http://127.0.0.1/host/cs440/cs440-wargame/takestep.php?map='.$map_x.'&step='.$steps);
+	}
+	$back = objectToArray(json_decode($back));
+	return $back;
 }
 
 ?>
