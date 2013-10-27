@@ -12,66 +12,8 @@ function getScore($map_x){
 	}
 	return $score;
 }
-function buildTree_MinMax($map_x){
-	$tree = buildTree_MinMax_helper($map_x, array(), 0, 0);
-	$tree = array("next" => "x,x", "value"=> -1, "user" => 1,"subtree" =>$tree);
-	$tree["value"] = getMinMax($tree["subtree"],1,1);
-	$tree["next"] = $tree["value"][1];
-	$tree["value"] = $tree["value"][0];
-	$tree["count"] = 0;
-	foreach($tree["subtree"] as $node){
-		$tree["count"] += $node['count'];
-	}
-	return $tree;
-}
-function buildTree_MinMax_helper($map_x, $ancestor ,$level = 0, $user){
-	if($level == 3){
-		$ret = excuteStep($map_x, $ancestor);
-		$map_x = $ret[0];
-		$socre = getScore($map_x);
-		return $socre[1];
-	}
-	else{
-		$subtree = array();
-		for($r = 0; $r < 6; $r++){
-			for($c = 0; $c < 6; $c++){
-				if($map_x[$r][$c]["color"] == -1){
-					if(!in_array($map_x[$r][$c]["coor"],$ancestor)){
-						$ancestor_next = array_merge($ancestor, array($map_x[$r][$c]["coor"]));
-						$temp_node = array("coor"=>$map_x[$r][$c]["coor"] , "value" => -1, "subtree" => buildTree_MinMax_helper($map_x, $ancestor_next ,$level+1, not($user)));
-						
-						$edge_counter = 1;
-						while(is_array($temp_node["subtree"]) && empty($temp_node["subtree"])){
-							$temp_node = array("coor"=>$map_x[$r][$c]["coor"] , "value" => -1, "subtree" => buildTree_MinMax_helper($map_x, $ancestor_next ,$level+1+$edge_counter, not($user)));
-							$edge_counter ++;
-						}
-						
-						if(is_array($temp_node["subtree"])){
-							$temp_node["value"] = getMinMax($temp_node["subtree"], $user);
-							$temp_node["count"] = 0;
-							foreach($temp_node["subtree"] as $node){
-								$temp_node["count"] += $node['count'];
-							}
-						}
-						else{
-							$temp_node["value"] = $temp_node["subtree"];
-							$temp_node["subtree"] = NULL;
-							$temp_node["count"] = 1;
-						}
-						array_push($subtree, $temp_node);
-					}
-				}
-			}
-		}
-		return $subtree;
-	}
-}
-function getDecision_MinMax($map_x){
-	$result = buildTree_MinMax($map_x);
-	return array($result['next'],$result['count']);
-}
-function getDecision_AB($map_x){
-	$result = buildTree_AB($map_x);
+function getDecision_AB($map_x, $maxdepth){
+	$result = buildTree_AB($map_x, $maxdepth);
 	return array($result['next'],$result['count']);
 }
 function getMinMax($subtree,$max,$root = 0){
@@ -115,8 +57,8 @@ function getMinMax($subtree,$max,$root = 0){
 	}
 }
 
-function buildTree_AB($map_x){
-	$tree = buildTree_AB_helper($map_x, array(), 0, 0, 0, 999999);
+function buildTree_AB($map_x, $maxdepth){
+	$tree = buildTree_AB_helper($map_x, array(), 0, 0, 0, 999999, $maxdepth);
 	$tree = array("next" => "x,x", "value"=> -1, "max" => 1,"subtree" =>$tree[1]);
 	$tree["value"] = getMinMax($tree["subtree"],1,1);
 	$tree["next"] = $tree["value"][1];
@@ -127,71 +69,8 @@ function buildTree_AB($map_x){
 	}
 	return $tree;
 }
-/*function buildTree_AB_helper($map_x, $ancestor ,$level = 0, $user){
-	//echo "level".$level."=".($_SESSION['level'.($level)])."\n";
-	//$_SESSION['level'.($level)] = 'x';
-	if($level == 3){
-		$map_x = excuteStep($map_x, $ancestor);
-		$socre = getScore($map_x);
-		return $socre[1];
-	}
-	else{
-		$subtree = array();
-		for($r = 0; $r < 6; $r++){
-			for($c = 0; $c < 6; $c++){
-				if($map_x[$r][$c]["color"] == -1){
-					if(!in_array($map_x[$r][$c]["coor"],$ancestor)){
-						if($level == 1)
-						echo $_SESSION['level'.($level)]."\n";
-						$ancestor_next = array_merge($ancestor, array($map_x[$r][$c]["coor"]));
-						$val = buildTree_AB_helper($map_x, $ancestor_next ,$level+1, not($user));
-						
-						if(is_array($val)){
-							$value = getMinMax($val, $user);
-							if($value != "x"){
-								if($_SESSION['level'.($level+1)] == 'x'){
-									$_SESSION['level'.($level+1)] = $value;
-								}
-								else if(!$user && $_SESSION['level'.($level+1)] < $value){
-									$_SESSION['level'.($level+1)] = $value;
-								}
-								else if($user && $_SESSION['level'.($level+1)] > $value){
-									$_SESSION['level'.($level+1)] = $value;
-								}
-							}
-							if($_SESSION['level'.($level)] != "x"){
-								if($user && $val <= $_SESSION['level'.($level)]){
-									return $subtree;
-								}
-								else if(!$user && $val >= $_SESSION['level'.($level)]){
-									return $subtree;
-								}
-							}
-							$node = array("coor"=>$map_x[$r][$c]["coor"] , "value" => $value, "subtree" => $val);
-						}
-						else{
-							if($_SESSION['level'.($level)] != "x"){
-								if($user && $val <= $_SESSION['level'.($level)]){
-									return $subtree;
-								}
-								else if(!$user && $val >= $_SESSION['level'.($level)]){
-									return $subtree;
-								}
-							}
-							$node = array("coor"=>$map_x[$r][$c]["coor"] , "value" => $val);
-						}
-						array_push($subtree, $node);
-					}
-				}
-			}
-		}
-		$_SESSION['level'.$level+1] = "x";
-		return $subtree;
-	}
-}
-*/
-function buildTree_AB_helper($map_x, $ancestor ,$level = 0, $user, $alpha, $beta){
-	if($level == 2){
+function buildTree_AB_helper($map_x, $ancestor ,$level = 0, $user, $alpha, $beta, $maxdepth){
+	if($level >= $maxdepth){
 		$ret = excuteStep($map_x, $ancestor);
 		$map_x = $ret[0];
 		$socre = getScore($map_x);
@@ -204,12 +83,12 @@ function buildTree_AB_helper($map_x, $ancestor ,$level = 0, $user, $alpha, $beta
 				if($map_x[$r][$c]["color"] == -1){
 					if(!in_array($map_x[$r][$c]["coor"],$ancestor)){
 						$ancestor_next = array_merge($ancestor, array($map_x[$r][$c]["coor"]));
-						$val = buildTree_AB_helper($map_x, $ancestor_next ,$level+1, 0, $alpha, $beta);
+						$val = buildTree_AB_helper($map_x, $ancestor_next ,$level+1, 0, $alpha, $beta, $maxdepth);
 						$node = array("coor"=>$map_x[$r][$c]["coor"] ,/*"max" => $user, "alpha"=>$alpha,"beta"=>array("origin"=>$beta,"changto"=>min($beta,$val[0])),*/ "value" => 0, "subtree" => $val[1]);
 
 						$edge_counter = 1;
 						while(is_array($node["subtree"]) && empty($node["subtree"])){
-							$val = buildTree_AB_helper($map_x, $ancestor_next ,$level+1+$edge_counter, 0, $alpha, $beta);
+							$val = buildTree_AB_helper($map_x, $ancestor_next ,$level+1+$edge_counter, 0, $alpha, $beta, $maxdepth);
 							$node = array("coor"=>$map_x[$r][$c]["coor"] ,/*"max" => $user, "alpha"=>$alpha,"beta"=>array("origin"=>$beta,"changto"=>min($beta,$val[0])),*/ "value" => 0, "subtree" => $val[1]);
 							$edge_counter ++;
 						}
@@ -243,12 +122,12 @@ function buildTree_AB_helper($map_x, $ancestor ,$level = 0, $user, $alpha, $beta
 				if($map_x[$r][$c]["color"] == -1){
 					if(!in_array($map_x[$r][$c]["coor"],$ancestor)){
 						$ancestor_next = array_merge($ancestor, array($map_x[$r][$c]["coor"]));
-						$val = buildTree_AB_helper($map_x, $ancestor_next ,$level+1, 1, $alpha, $beta);
+						$val = buildTree_AB_helper($map_x, $ancestor_next ,$level+1, 1, $alpha, $beta, $maxdepth);
 						$node = array("coor"=>$map_x[$r][$c]["coor"] ,/*"max" => $user, "alpha"=>$alpha,"beta"=>array("origin"=>$beta,"changto"=>min($beta,$val[0])),*/ "value" => 0, "subtree" => $val[1]);
 
 						$edge_counter = 1;
 						while(is_array($node["subtree"]) && empty($node["subtree"])){
-							$val = buildTree_AB_helper($map_x, $ancestor_next ,$level+1+$edge_counter, 0, $alpha, $beta);
+							$val = buildTree_AB_helper($map_x, $ancestor_next ,$level+1+$edge_counter, 0, $alpha, $beta, $maxdepth);
 							$node = array("coor"=>$map_x[$r][$c]["coor"] ,/*"max" => $user, "alpha"=>$alpha,"beta"=>array("origin"=>$beta,"changto"=>min($beta,$val[0])),*/ "value" => 0, "subtree" => $val[1]);
 							$edge_counter ++;
 						}
@@ -276,16 +155,27 @@ function buildTree_AB_helper($map_x, $ancestor ,$level = 0, $user, $alpha, $beta
 	}
 }
 
-
-
+function getDepth($turn){
+	if($turn < 6){
+		return 2;
+	}
+	else if($turn < 10){
+		return 3;
+	}
+	else if($turn < 14){
+		return 3;
+	}
+	else{
+		return 4;
+	}
+}
 //play it !
 echo "the Map is ".$_GET['map']."<br/>";
-echo "AlphaBeta vs. AlphaBeta(Level 1)"."<br/>";
 $time = time();
 $timesum = 0;
 $nodesum = array(0,0);
 for($i = 0; $i < 18; $i++){
-$decision = getDecision_AB($map);
+$decision = getDecision_AB($map, getDepth($i));
 $coor = $decision[0];
 $node_count = $decision[1];
 $ret = excuteStep($map, array($coor));
@@ -296,7 +186,7 @@ $nodesum[0] +=$node_count;
 echo "Blue: ".($ret[1] == 0 ?"Commando Para Drop":" Drop(Death Blitz)")." in ".decodeCoor($coor).", use: ".$time_dur."s, Node expanded: ".$node_count."<br/>";
 $time = time();
 $map = flipView($map);
-$decision = getDecision_AB($map);
+$decision = getDecision_AB($map, getDepth($i));
 $coor = $decision[0];
 $node_count = $decision[1];
 $ret = excuteStep($map, array($coor));
@@ -313,5 +203,4 @@ echo "Total number of game tree nodes expanded by Blue:".$nodesum[0]."<br/>";
 echo "Total number of game tree nodes expanded by Green:".$nodesum[1]."<br/>";
 echo "Average number of nodes expanded / Move:". ($nodesum[0]+$nodesum[1])/36 ."<br/>";
 echo "Average amount of time / Move:". $timesum/36 ."s<br/>";
-
 ?>

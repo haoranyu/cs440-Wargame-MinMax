@@ -51,11 +51,14 @@ return $R[$coor[0]].$C[$coor[1]];
 }
 function excuteStep($map_x, $steps){
 	$map_x = urlencode(json_encode($map_x));
-	$steps = urlencode(json_encode($steps)); 
-	$back = curl_file_get_contents('http://127.0.0.1/host/cs440/cs440-wargame/takestep.php?map='.$map_x.'&step='.$steps);
+	$steps = urlencode(json_encode($steps));
+	$url = 'http://'.$_SERVER['SERVER_NAME'].':'.$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
+	$url = explode("?", $url);
+	$url = $url[0];
+	$back = curl_file_get_contents($url.'takestep.php?map='.$map_x.'&step='.$steps);
 	//exit('http://127.0.0.1/host/cs440/cs440-wargame/takestep.php?map='.$map_x.'&step='.$steps);
 	while($back == false){
-		$back = curl_file_get_contents('http://127.0.0.1/host/cs440/cs440-wargame/takestep.php?map='.$map_x.'&step='.$steps);
+		$back = curl_file_get_contents($url.'takestep.php?map='.$map_x.'&step='.$steps);
 	}
 	$back = objectToArray(json_decode($back));
 	return $back;
