@@ -156,17 +156,23 @@ function buildTree_AB_helper($map_x, $ancestor ,$level = 0, $user, $alpha, $beta
 }
 
 function getDepth($turn){
-	if($turn < 6){
-		return 2;
+	if($turn < 3){
+		return 1;
 	}
 	else if($turn < 10){
+		return 2;
+	}
+	else if($turn < 12){
 		return 3;
 	}
 	else if($turn < 14){
-		return 3;
+		return 4;
+	}
+	else if($turn < 16){
+		return 5;
 	}
 	else{
-		return 4;
+		return 2;
 	}
 }
 //play it !

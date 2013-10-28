@@ -1,11 +1,11 @@
 <?php
-
+define ("SIZE", "6");
 include("function.php");
 function shouldBlitzing($map_x, $r, $c, $user){
 	if($r - 1 >= 0 && $map_x[$r - 1][$c]["color"] == $user) return true;
 	if($c - 1 >= 0 && $map_x[$r][$c - 1]["color"] == $user) return true;
-	if($r + 1 < 6 && $map_x[$r+1][$c]["color"] == $user) return true;
-	if($c + 1 < 6 && $map_x[$r][$c+1]["color"] == $user) return true;
+	if($r + 1 < SIZE && $map_x[$r+1][$c]["color"] == $user) return true;
+	if($c + 1 < SIZE && $map_x[$r][$c+1]["color"] == $user) return true;
 	return false;
 }
 function takeStep($map_x, $r, $c, $user){
@@ -24,11 +24,11 @@ function takeStep($map_x, $r, $c, $user){
 				$map_x[$r][$c-1]["color"] = $user;
 				$con_flag = 1;
 			}
-			if($r + 1 < 6 && $map_x[$r+1][$c]["color"] == not($user)) {
+			if($r + 1 < SIZE && $map_x[$r+1][$c]["color"] == not($user)) {
 				$map_x[$r+1][$c]["color"] = $user;
 				$con_flag = 1;
 			}
-			if($c + 1 < 6 && $map_x[$r][$c+1]["color"] == not($user)) {
+			if($c + 1 < SIZE && $map_x[$r][$c+1]["color"] == not($user)) {
 				$map_x[$r][$c+1]["color"] = $user;
 				$con_flag = 1;
 			}

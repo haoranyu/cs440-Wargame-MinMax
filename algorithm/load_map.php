@@ -18,5 +18,4 @@ foreach($map as &$line){
 	$counter[0]++;
 }
 //exit(print_r($map));
-$cood = array("H" => 6, "W" => 6);
 ?>

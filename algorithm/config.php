@@ -1,5 +1,7 @@
 <?php
+set_time_limit(20000);
 	header('Content-Type: text/html');
+	define ("SIZE", "6");
 	session_start();
 	$_SESSION['level-1'] = 'x';
 	$_SESSION['level0'] = 'x';
@@ -8,7 +10,6 @@
 	$_SESSION['level3'] = 'x';
 	$_SESSION['level4'] = 'x';
 	$_SESSION['level5'] = 'x';
-	set_time_limit(20000);
 	$map_array = array(
 				'Keren',
 				'Narvik',
