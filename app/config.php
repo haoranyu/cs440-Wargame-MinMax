@@ -38,4 +38,10 @@
 	else{
 		exit("no map specified('Keren','Narvik','Sevastopol','Smolensk','Westerplatte')");
 	}
+	if(isset($_GET['first'])){
+		$first_step = $_GET['first'];
+	}
+	else{
+		$first_step = "Me";
+	}
 ?>
