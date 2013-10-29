@@ -33,6 +33,7 @@ border-top:1px solid #ddd;
 color:#bbb;
 overflow:hidden;
 padding-top:15px;
+margin-bottom:20px;
 }
 .x-map{
 background:#fff;
@@ -46,13 +47,13 @@ border-radius:15px;
 padding:10px;
 }
 .panel{
-width:352px;
+width:280px;
 margin:0px auto 0 auto;
 text-align:center;
-font-size:20px;
+font-size:15px;
 }
 .selection{
-width:352px;
+width:280px;
 margin:0px auto 0 auto;
 text-align:center;
 font-size:14px;

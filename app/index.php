@@ -13,6 +13,9 @@ include("function.php");
 <html>
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link rel="apple-touch-icon" href="./icon.png"/>
 <base target="_blank">
 <title>War Game</title>
 <link rel="stylesheet" type="text/css" href="main.css" />

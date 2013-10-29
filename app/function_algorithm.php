@@ -158,16 +158,16 @@ function getDepth($turn){
 	if($turn < 3){
 		return 1;
 	}
-	else if($turn < 10){
+	else if($turn < 9){
 		return 2;
 	}
-	else if($turn < 12){
+	else if($turn < 13){
 		return 3;
 	}
 	else if($turn < 14){
 		return 4;
 	}
-	else if($turn < 16){
+	else if($turn < 15){
 		return 5;
 	}
 	else{
