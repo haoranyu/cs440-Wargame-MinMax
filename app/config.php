@@ -27,7 +27,7 @@
 		$map = "";
 		for($j = 0; $j < 6; $j++){
 			for($i = 0; $i < 6; $i++){
-				$map = $map.(rand()%100);
+				$map = $map.((rand()%99)+1);
 				if($i!=5){
 					$map = $map."\t";
 				}
