@@ -38,10 +38,10 @@ include("function.php");
 	<?php drawMap($map)?>
 </div>
 <div class="panel">
-	<span><?php echo $first_step == "Me"?"Player":"Computer";?>: </span>
+	<span>Computer: </span>
 	<span id="blue">0</span>
 	- 
-	<span><?php echo $first_step == "Me"?"Computer":"Player";?>: </span><span id="green">0</span>
+	<span>Player: </span><span id="green">0</span>
 <div>
 <div class="footer">&copy; CS440 Group @ UIUC <br/>By Haoran Yu, Le Wang and Tao Feng</div>
 <script>
