@@ -1,5 +1,8 @@
 <?php
-
+/*
+	COPYRIGHT CS440 Group @ UIUC 
+	By Haoran Yu, Le Wang and Tao Feng
+*/
 include("function.php");
 function shouldBlitzing($map_x, $r, $c, $user){
 	if($r - 1 >= 0 && $map_x[$r - 1][$c]["color"] == $user) return true;

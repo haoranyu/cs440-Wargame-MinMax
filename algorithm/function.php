@@ -1,4 +1,8 @@
 <?php
+/*
+	COPYRIGHT CS440 Group @ UIUC 
+	By Haoran Yu, Le Wang and Tao Feng
+*/
 function curl_file_get_contents($durl){
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, $durl);

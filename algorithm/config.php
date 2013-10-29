@@ -1,4 +1,8 @@
 <?php
+/*
+	COPYRIGHT CS440 Group @ UIUC 
+	By Haoran Yu, Le Wang and Tao Feng
+*/
 set_time_limit(20000);
 	header('Content-Type: text/html');
 	define ("SIZE", "6");

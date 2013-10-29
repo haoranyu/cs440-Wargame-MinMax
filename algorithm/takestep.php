@@ -1,4 +1,8 @@
 <?php
+/*
+	COPYRIGHT CS440 Group @ UIUC 
+	By Haoran Yu, Le Wang and Tao Feng
+*/
 define ("SIZE", "6");
 include("function.php");
 function shouldBlitzing($map_x, $r, $c, $user){

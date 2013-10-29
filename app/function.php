@@ -1,4 +1,8 @@
 <?php
+/*
+	COPYRIGHT CS440 Group @ UIUC 
+	By Haoran Yu, Le Wang and Tao Feng
+*/
 function curl_file_get_contents($durl){
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, $durl);
@@ -10,16 +14,23 @@ $output = curl_exec($ch);
 curl_close($ch);
    return $output;
  }
-function drawMap($map){
-	echo "<div class=\"x-map\">";
+function drawMap($map,$print = 1){
+	$string = "";
+	$string .= "<div class=\"x-map\" id=\"x-map\">";
 	foreach($map as $r){
 		foreach($r as $c){
-			echo '<span class="x-block o'.$c['color'].'">'.$c['value']."|</span> ";
+			$string .= '<span class="x-block u'.$c['color'].'" coor="'.$c['coor'].'">'.$c['value']."</span> ";
 		}
-		echo "<br/>";
+		$string .= "<br/>";
 	}
-	echo '<div style="float:none"></div>';
-	echo "</div>";
+	$string .= '<div style="float:none"></div>';
+	$string .= "</div>";
+	if($print == 0){
+		return $string; 
+	}
+	else{
+		echo $string;
+	}
 }
 function not($u){
 	if($u == 1) return 0;
@@ -63,5 +74,4 @@ function excuteStep($map_x, $steps){
 	$back = objectToArray(json_decode($back));
 	return $back;
 }
-
 ?>

@@ -1,4 +1,8 @@
 <?php
+/*
+	COPYRIGHT CS440 Group @ UIUC 
+	By Haoran Yu, Le Wang and Tao Feng
+*/
 $map = str_replace("\r","",$map);
 $map = str_replace("\n\n","",$map);
 $map = trim($map);

@@ -1,0 +1,92 @@
+/*
+	COPYRIGHT CS440 Group @ UIUC 
+	By Haoran Yu, Le Wang and Tao Feng
+*/
+body,h1,h2,h3,h4,h5,h6,hr,p,blockquote,dl,dt,dd,ul,ol,li,pre,form,fieldset,legend,button,input,textarea,th,td{margin:0;padding:0;font-family:arial,ËÎÌו}ul,ol{list-style:none;}img{border:none;}a{text-decoration:none;}a:hover{text-decoration:underline;}.nofloat{float:none;}.maincenter{width:984px;margin:0 auto;}.clear{clear:both;}.iclear{clear:both;display:block;overflow:hidden;padding:0;margin:0;width:0;height:0;}
+body{
+background:#eee;
+}
+.main{
+width:100%;
+}
+.header{
+width:100%;
+font-size:40px;
+height:80px;
+line-height:82px;
+text-align:center;
+font-family:Arial;
+background:#976232;
+border-bottom:3px solid #ee9977;
+color:#fff;
+overflow:hidden;
+}
+.footer{
+width:100%;
+font-size:14px;
+height:40px;
+line-height:20px;
+text-align:center;
+font-family:Arial;
+margin-top:30px;
+border-top:1px solid #ddd;
+color:#bbb;
+overflow:hidden;
+padding-top:15px;
+}
+.x-map{
+background:#fff;
+width:252px;
+height:252px;
+margin:20px auto 20px auto;
+border:1px solid #ddd;
+-moz-border-radius: 15px;
+-webkit-border-radius: 15px;   
+border-radius:15px; 
+padding:10px;
+}
+.panel{
+width:252px;
+margin:0px auto 0 auto;
+text-align:center;
+font-size:20px;
+}
+.selection{
+width:252px;
+margin:0px auto 0 auto;
+text-align:center;
+font-size:14px;
+margin-top:20px;
+}
+.x-block{
+border:1px solid #fff;
+-moz-border-radius: 20px;
+-webkit-border-radius: 20px;   
+border-radius:20px; 
+width:40px;
+height:40px;
+text-align:center;
+line-height:40px;
+float:left;
+display:block;
+cursor:pointer;
+}
+.u-1{
+background:#eee
+}
+.u0{
+background:green;
+color:#fff;
+}
+.u1-1{
+border:3px solid blue;
+background:#7777dd;
+width:36px;
+height:36px;
+line-height:36px;
+color:#fff;
+}
+.u1{
+background:blue;
+color:#fff;
+}
