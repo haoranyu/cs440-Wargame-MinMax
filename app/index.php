@@ -81,7 +81,7 @@ else{
 	alert("Please wait before your next move");
 }
 <?php }?>
-$(document).on("click",".x-block",function(){
+$(document).on("click",".u-1",function(){
 	if($('.u-1').size()>=1){
 		if(lock == 0){
 			lock = 1;
@@ -132,7 +132,7 @@ if($coor != "x,x"){
 $ret = excuteStep($map, array($coor));
 $map = $ret[0];
 }
-if($last > 1){
+if($last > 0){
 $map = flipView($map);
 $decision = getDecision_AB($map, getDepth($i));
 $coor = $decision[0];
